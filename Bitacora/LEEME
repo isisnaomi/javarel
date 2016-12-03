@@ -1,0 +1,37 @@
+Para configurar la bitocara es mediante el archivo configurationLog.txt, y tiene la siguiente estructura:
+
+TRACE-DEBUG-INFO-WARN-ERROR-FATAL
+52012
+
+Donde la primera linea representa los niveles disponibles:
+FATAL = El nivel FATAL designa eventos de error muy severos que presumiblemente llevarán a la aplicación a abortar.
+ERROR = El nivel de ERROR designa eventos de error que pueden permitir que la aplicación continúe ejecutándose.
+WARN = El nivel WARN designa situaciones potencialmente dañinas.
+INFO = El nivel INFO designa mensajes informativos que destacan el progreso de la aplicación.
+DEBUG = El nivel DEBUG designa eventos informativos de grano fino que son más útiles para depurar una aplicación.
+TRACE = El nivel DEBUG designa eventos informativos de grano fino que son más útiles para depurar una aplicación.
+
+Siguiendo la configuración actual, FATAL es el nivel más alto y TRACE el nivel más bajo, el orden puede ser modificado a conveniencia,
+la segunda linea representa el tamaño en BYTES que puede tener la bitacora.
+
+Ejemplo de uso:
+
+package com.logger;
+
+/**
+ * Created by shado on 02/12/2016.
+ */
+public class Example {
+
+    public static void main(String[] args) {
+        LoggerMessenger messenger = new Logger();
+        messenger.encode( Example.class, 0, "Mensaje de prueba" );
+    }
+}
+
+SALIDA: 02/12/2016-19:53:24 [TRACE] com.logger.Example - Mensaje de prueba
+
+El primer parametro viende siendo la clase quien manda el mensaje, el segundo parametro el nivel de prioridad que tiene y el ultimo
+parametro el mensaje.
+Las salidas se guardan en log.txt
+
