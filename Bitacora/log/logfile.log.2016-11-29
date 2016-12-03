@@ -1,0 +1,16 @@
+2016-11-29 14:08:48,523  INFO [main] - test.Prueab.main 11 - Prueba de info
+2016-11-29 15:35:39,112  INFO [main] - test.Prueab.main 11 - Prueba de info
+2016-11-29 15:35:39,117  WARN [main] - test.Prueab.main 12 - Prueba de warning
+2016-11-29 15:35:59,786  WARN [main] - test.Prueab.main 11 - Prueba de warning
+2016-11-29 15:35:59,794  INFO [main] - test.Prueab.main 12 - Prueba de info
+2016-11-29 15:36:18,782  WARN [main] - test.Prueab.main 11 - Prueba de warning
+2016-11-29 15:36:18,786  INFO [main] - test.Prueab.main 12 - Prueba de info
+2016-11-29 15:37:24,853  WARN [main] - test.Prueab.main 11 - Prueba de warning
+2016-11-29 15:37:24,861  INFO [main] - test.Prueab.main 12 - Prueba de info
+2016-11-29 15:37:55,021  WARN [main] - test.Prueab.main 11 - Prueba de warning
+2016-11-29 15:37:55,025  INFO [main] - test.Prueab.main 12 - Prueba de info
+2016-11-29 15:37:55,025 ERROR [main] - test.Prueab.main 13 - Prueba de error
+2016-11-29 15:47:02,376  WARN [main] - test.Prueab.main 12 - Prueba de warning
+2016-11-29 15:47:02,381  INFO [main] - test.Prueab.main 13 - Prueba de info
+2016-11-29 15:47:02,382 ERROR [main] - test.Prueab.main 14 - Prueba de error
+2016-11-29 15:47:02,388 FATAL [main] - test.Prueab.main 15 - Prueba fatal

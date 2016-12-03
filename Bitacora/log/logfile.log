@@ -1,0 +1,24 @@
+2016-12-02 12:06:51,622  WARN [main] - test.Prueab.main 12 - Prueba de warning
+2016-12-02 12:06:51,622  INFO [main] - test.Prueab.main 13 - Prueba de info
+2016-12-02 12:06:51,622 ERROR [main] - test.Prueab.main 14 - Prueba de error
+2016-12-02 12:06:51,637 FATAL [main] - test.Prueab.main 15 - Prueba fatal
+2016-12-02 12:09:09,454  WARN [main] - test.Prueab.main 12 - Prueba de warning
+2016-12-02 12:09:09,470  INFO [main] - test.Prueab.main 13 - Prueba de info
+2016-12-02 12:09:09,470 ERROR [main] - test.Prueab.main 14 - Prueba de error
+2016-12-02 12:09:09,470 FATAL [main] - test.Prueab.main 15 - Prueba fatal
+2016-12-02 12:10:31,068  WARN [main] - test.Prueab.main 12 - Prueba de warning
+2016-12-02 12:10:31,088  INFO [main] - test.Prueab.main 13 - Prueba de info
+2016-12-02 12:10:31,090 ERROR [main] - test.Prueab.main 14 - Prueba de error
+2016-12-02 12:10:31,106 FATAL [main] - test.Prueab.main 15 - Prueba fatal
+2016-12-02 12:11:09,505  WARN [main] - test.Prueab.main 12 - Prueba de warning
+2016-12-02 12:11:09,521  INFO [main] - test.Prueab.main 13 - Prueba de info
+2016-12-02 12:11:09,521 ERROR [main] - test.Prueab.main 14 - Prueba de error
+2016-12-02 12:11:09,521 FATAL [main] - test.Prueab.main 15 - Prueba fatal
+2016-12-02 12:11:30,350  WARN [main] - test.Prueab.main 12 - Prueba de warning
+2016-12-02 12:11:30,350  INFO [main] - test.Prueab.main 13 - Prueba de info
+2016-12-02 12:11:30,350 ERROR [main] - test.Prueab.main 14 - Prueba de error
+2016-12-02 12:11:30,350 FATAL [main] - test.Prueab.main 15 - Prueba fatal
+2016-12-02 12:29:13,332  WARN [main] - test.Prueab.main 12 - Prueba de warning
+2016-12-02 12:29:13,348  INFO [main] - test.Prueab.main 13 - Prueba de info
+2016-12-02 12:29:13,348 ERROR [main] - test.Prueab.main 14 - Prueba de error
+2016-12-02 12:29:13,348 FATAL [main] - test.Prueab.main 15 - Prueba fatal
