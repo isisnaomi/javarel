@@ -1,0 +1,5 @@
+02/12/2016-18:35:00 [TRACE] com.logger.Example - Mensaje de prueba
+02/12/2016-18:35:48 [TRACE] com.logger.Example - Mensaje de prueba
+02/12/2016-18:37:54 [TRACE] com.logger.Example - Mensaje de prueba
+02/12/2016-19:49:40 [TRACE] com.logger.Example - Mensaje de prueba
+02/12/2016-19:53:24 [TRACE] com.logger.Example - Mensaje de prueba
