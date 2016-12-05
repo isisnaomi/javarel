@@ -1,1 +1,0 @@
-02/12/2016-17:44:33 [INFO] com.logger.Example - Mensaje de prueba
