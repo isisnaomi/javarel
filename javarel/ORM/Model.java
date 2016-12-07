@@ -25,18 +25,20 @@ import javarel.resources.*;
  * @author IsisNaomi
  */
 public class Model {
-    private String tableName;
+    
     private ArrayList<String> fieldsName = new ArrayList<String>();
     private ArrayList<Class> fieldsClass = new ArrayList<Class>();
     private ArrayList<Object> instances = new ArrayList<Object>();
     private ResultSet myRs = null;
     String className = this.getClass().getSimpleName().toLowerCase();
+    private String tableName = className.concat("s");
     //private DataBaseConn dbc = new DataBaseConn();//
     private DatabaseConnectionsPool dbcp;
     private boolean isXML = false;
-    private XMLFileManager xmlManager = new XMLFileManager( className, "root", "class", "table" ); 
+    private XMLFileManager xmlManager = new XMLFileManager( className, tableName ); 
 
     public Model() {
+        System.out.println(className);
         
         try {
             DatabaseConnectionsPool dbcp = new DatabaseConnectionsPool();
@@ -47,7 +49,7 @@ public class Model {
     }
     
     public void initialize() throws NonExistentMappingException {
-        System.out.println("hola");
+        
         createModelInfo();
         checkForXML( );
         tableName = xmlManager.getTableName();
@@ -133,12 +135,13 @@ public class Model {
     private void checkForXML( ) throws NonExistentMappingException {
         
         String filePath = new File("").getAbsolutePath();
-        filePath = filePath.concat("\\src\\config\\"+ className + "_config.xml");
-        System.out.println(filePath);
+        //filePath = filePath.concat("\\src\\config\\"+ className + "_config.xml");
+        //File f = new File(className + "_config.xml");
+        //System.out.println(filePath);
         
         try{
                
-            File f = new File(filePath);
+            File f = new File(className + "_config.xml");
             
             if(f.exists() && !f.isDirectory()) { 
                 

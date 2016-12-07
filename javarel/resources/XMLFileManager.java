@@ -35,6 +35,7 @@ public class XMLFileManager {
     String rootTag;
     String classNameTag;
     String tableNameTag;
+    String className;
 
     public String getTableName() {
         
@@ -47,15 +48,21 @@ public class XMLFileManager {
         this.fileName = fileName;
         
     }
-     public XMLFileManager(String fileName,String rootTag, String classNameTag, String tableNameTag ) {
+     public XMLFileManager(String fileName, String tableName ) {
          
         this.fileName = fileName;
+        this.className = fileName;
+        this.tableName = tableName;
+        this.rootTag = "root";
+        this.classNameTag = "class";
+        this.tableNameTag = "table";
+        
         
     }
     
 
     public void readXML() throws SAXException, IOException, ParserConfigurationException{
-	File fXmlFile = new File(filePath +"\\src\\config\\" + fileName + "_config.xml");
+	File fXmlFile = new File(fileName + "_config.xml");
 	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 	Document doc = dBuilder.parse(fXmlFile);
@@ -68,27 +75,32 @@ public class XMLFileManager {
     }
     public void createXML(  )throws TransformerException, SAXException, ParserConfigurationException, IOException {
         if (!isXML){
+            
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
         Document document = documentBuilder.newDocument();
-
+            
             Element root = document.createElement(rootTag);
             document.appendChild(root);
+        
 
             Element className = document.createElement(classNameTag);
-            className.appendChild(document.createTextNode(this.getClass().getSimpleName()));
+            className.appendChild(document.createTextNode(fileName));
             root.appendChild(className);
+           
 
             Element tableName = document.createElement(tableNameTag);
             tableName.appendChild(document.createTextNode(this.tableName));
             root.appendChild(tableName);
+            
 
         DOMSource source = new DOMSource(document);
-
+        
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
-            System.out.println(filePath+"\\src\\config\\" + this.fileName +"_config.xml");
-        StreamResult result = new StreamResult(filePath+"\\src\\config\\" + this.fileName +"_config.xml");
+        
+        StreamResult result = new StreamResult(this.fileName +"_config.xml");
+        
         transformer.transform(source, result);
         
         isXML = true;
