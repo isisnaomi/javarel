@@ -2,11 +2,9 @@
 package javarel.Pool;
 
 import org.json.simple.JSONObject;
-<<<<<<< HEAD
-import resources.JSONFileReader;
-=======
+
 import javarel.resources.JSONFileReader;
->>>>>>> 553ad725d1dc7c017dfed4aaebb1ec4b3de9764b
+
 
 class PoolConfigurationReader {
 

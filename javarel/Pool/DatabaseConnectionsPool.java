@@ -1,20 +1,13 @@
 
 package javarel.Pool;
 
-<<<<<<< HEAD
-import javarel.DatabaseManager.DatabaseManager;
 
-
-public class DatabaseConnectionsPool {
-
-    private DatabaseManager databaseManager;
-=======
 import javarel.DB.DataBaseAccesor;
 
 public class DatabaseConnectionsPool {
 
     private DataBaseAccesor databaseAccessor;
->>>>>>> 553ad725d1dc7c017dfed4aaebb1ec4b3de9764b
+
 
     private int blockSize;
 
@@ -31,11 +24,9 @@ public class DatabaseConnectionsPool {
 
         PoolConfigurationReader poolConfigurationReader = new PoolConfigurationReader();
 
-<<<<<<< HEAD
-        this.databaseManager = new DatabaseManager( this );
-=======
+
         this.databaseAccessor = new DataBaseAccesor( this );
->>>>>>> 553ad725d1dc7c017dfed4aaebb1ec4b3de9764b
+
 
         this.blockSize = poolConfigurationReader.getBlockSize();
         this.maxPoolSize = poolConfigurationReader.getMaxPoolSize();
@@ -73,11 +64,9 @@ public class DatabaseConnectionsPool {
     public void releaseConnection( DatabaseConnection connection ) throws Exception {
 
         if ( connection.isDeprecated() ) {
-<<<<<<< HEAD
-            connection.setConnection( this.databaseManager.getConnection() );
-=======
+
             connection.setConnection( this.databaseAccessor.getConnection() );
->>>>>>> 553ad725d1dc7c017dfed4aaebb1ec4b3de9764b
+
             connection.setDeprecated( false );
         }
 
@@ -95,22 +84,18 @@ public class DatabaseConnectionsPool {
 
     }
 
-<<<<<<< HEAD
-    public void updateConnections() {
-=======
+
     public void updateConnections() throws Exception {
->>>>>>> 553ad725d1dc7c017dfed4aaebb1ec4b3de9764b
+
 
         for ( int i = 0; i < this.maxPoolSize; i++ ) {
 
             if ( this.pool[ i ] != null ) {
                 DatabaseConnection actualIterationConnection = this.pool[i];
                 if ( ! actualIterationConnection.isAcquired() ) {
-<<<<<<< HEAD
-                    actualIterationConnection.setConnection( this.databaseManager.getConnection() );
-=======
+
                     actualIterationConnection.setConnection( this.databaseAccessor.getConnection() );
->>>>>>> 553ad725d1dc7c017dfed4aaebb1ec4b3de9764b
+
                 } else {
                     actualIterationConnection.setDeprecated( true );
                 }
@@ -160,11 +145,9 @@ public class DatabaseConnectionsPool {
 
             for ( int i = 0; i < this.blockSize; i++ ) {
                 this.pool[ indexFirstNotInitializedConnection ] =
-<<<<<<< HEAD
-                        new DatabaseConnection( indexFirstNotInitializedConnection, this.databaseManager.getConnection() );
-=======
+
                         new DatabaseConnection( indexFirstNotInitializedConnection, this.databaseAccessor.getConnection() );
->>>>>>> 553ad725d1dc7c017dfed4aaebb1ec4b3de9764b
+
                 indexFirstNotInitializedConnection++;
             }
 
@@ -201,11 +184,9 @@ public class DatabaseConnectionsPool {
 
                 for ( int i = 0; i < stopAt; i++ ) {
                     newPool[ firstNotInitializedPoolIndex ] =
-<<<<<<< HEAD
-                            new DatabaseConnection( firstNotInitializedPoolIndex, this.databaseManager.getConnection() );
-=======
+
                             new DatabaseConnection( firstNotInitializedPoolIndex, this.databaseAccessor.getConnection() );
->>>>>>> 553ad725d1dc7c017dfed4aaebb1ec4b3de9764b
+
                 }
             }
 
@@ -222,11 +203,9 @@ public class DatabaseConnectionsPool {
 
         this.pool = new DatabaseConnection[ this.maxPoolSize ];
         for ( int i = 0; i < this.blockSize; i++ ) {
-<<<<<<< HEAD
-            this.pool[ i ] = new DatabaseConnection( i, this.databaseManager.getConnection() );
-=======
+
             this.pool[ i ] = new DatabaseConnection( i, this.databaseAccessor.getConnection() );
->>>>>>> 553ad725d1dc7c017dfed4aaebb1ec4b3de9764b
+
         }
 
         this.amountBlocks++;
