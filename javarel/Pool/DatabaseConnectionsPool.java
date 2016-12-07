@@ -25,10 +25,8 @@ public class DatabaseConnectionsPool {
 
         PoolConfigurationReader poolConfigurationReader = new PoolConfigurationReader();
 
-
         this.databaseAccessor = new DataBaseAccessor( this );
-
-
+        
         this.blockSize = poolConfigurationReader.getBlockSize();
         this.maxPoolSize = poolConfigurationReader.getMaxPoolSize();
 
@@ -36,13 +34,14 @@ public class DatabaseConnectionsPool {
         this.amountAcquiredConnections = 0;
 
         this.initializePool();
+        
 
     }
 
     public DatabaseConnection acquireConnection() throws Exception {
-
+       
         DatabaseConnection databaseConnection = this.searchForNotAcquiredConnection();
-
+        System.out.println(databaseConnection);
         databaseConnection.setAcquired( true );
         this.amountAcquiredConnections++;
 
@@ -57,7 +56,7 @@ public class DatabaseConnectionsPool {
             this.increasePoolSize();
         }
         /* End */
-
+        
         return databaseConnection;
 
     }
@@ -88,7 +87,7 @@ public class DatabaseConnectionsPool {
 
     public void updateConnections() {
 
-
+        System.out.println("Se updatearon las conecshions");
         for ( int i = 0; i < this.maxPoolSize; i++ ) {
 
             if ( this.pool[ i ] != null ) {
@@ -98,7 +97,7 @@ public class DatabaseConnectionsPool {
                     try {
                         actualIterationConnection.setConnection( this.databaseAccessor.getConnection() );
                     } catch ( Exception e ) {
-                        e.printStackTrace();
+                        System.out.println(e.getMessage());
                     }
 
                 } else {
@@ -111,25 +110,27 @@ public class DatabaseConnectionsPool {
     }
 
     private DatabaseConnection searchForNotAcquiredConnection() throws Exception {
-
+        
         int i = 0;
         int poolSize = this.pool.length;
 
         while ( true ) {
 
             if ( i == poolSize ) {
-
+                
                 throw new Exception( "No connections available." );
 
             } else {
 
                 DatabaseConnection actualIterationConnection;
                 actualIterationConnection = this.pool[ i ];
-
+                
                 if ( actualIterationConnection.isAcquired() ) {
+                   
                     i++;
                     continue;
                 } else {
+                   
                     return actualIterationConnection;
                 }
 
@@ -208,9 +209,9 @@ public class DatabaseConnectionsPool {
 
         this.pool = new DatabaseConnection[ this.maxPoolSize ];
         for ( int i = 0; i < this.blockSize; i++ ) {
-
+            
             this.pool[ i ] = new DatabaseConnection( i, this.databaseAccessor.getConnection() );
-
+           
         }
 
         this.amountBlocks++;

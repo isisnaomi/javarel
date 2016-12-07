@@ -68,4 +68,8 @@ public class DatabaseConnection {
     void setDeprecated( boolean deprecated ) {
         this.deprecated = deprecated;
     }
+    
+    void disconnect(){
+        this.connection.disconnect();
+    }
 }

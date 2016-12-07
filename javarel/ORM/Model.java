@@ -37,19 +37,15 @@ public class Model {
     private boolean isXML = false;
     private XMLFileManager xmlManager = new XMLFileManager( className, tableName ); 
 
-    public Model() {
-        System.out.println(className);
-        
-        try {
-            DatabaseConnectionsPool dbcp = new DatabaseConnectionsPool();
-        } catch (Exception ex) {
-            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }
+  
     
     public void initialize() throws NonExistentMappingException {
-        
+        try {
+            dbcp = new DatabaseConnectionsPool();
+           
+        } catch (Exception ex) {
+            
+        }
         createModelInfo();
         checkForXML( );
         tableName = xmlManager.getTableName();
@@ -65,16 +61,16 @@ public class Model {
         String query = "select * from " + tableName;
         
         try {
-            
             //dbc.connect();
             DatabaseConnection connection = dbcp.acquireConnection();
             //myRs = dbc.excecuteQuery(query);
+            System.out.println(connection);
             myRs = connection.query(query);
             dbcp.releaseConnection( connection );
             
             
         } catch (Exception ex) {
-            
+            ex.printStackTrace();
             throw new ErroneousRelationshipException();
             
         }
@@ -161,7 +157,6 @@ public class Model {
     
     private void createModelInfo(){ 
         
-        tableName = className.concat("s");
         Field[] fields = this.getClass().getDeclaredFields();
         String fieldName;
         Class fieldClass;

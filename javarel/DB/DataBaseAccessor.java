@@ -123,7 +123,7 @@ public class DataBaseAccessor {
         if (isConnectionWorking()) {
             
             this.connectionPool.updateConnections();
-            changeListener.run();
+            
             
         } 
     }

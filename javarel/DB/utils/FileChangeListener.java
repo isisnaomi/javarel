@@ -33,7 +33,7 @@ public class FileChangeListener extends Thread{
             if( firstContent.equals(actualContent)== false ){
                 System.out.println("detectado un cambio en el configfile");
                 DB.notifyFileChange();
-                break;
+                firstContent = actualContent;
             }
         }
   
