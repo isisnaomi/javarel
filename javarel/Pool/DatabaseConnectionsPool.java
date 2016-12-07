@@ -1,12 +1,11 @@
 
 package javarel.Pool;
 
-import javarel.DatabaseManager.DatabaseManager;
-
+import javarel.DB.DataBaseAccesor;
 
 public class DatabaseConnectionsPool {
 
-    private DatabaseManager databaseManager;
+    private DataBaseAccesor databaseAccessor;
 
     private int blockSize;
 
@@ -23,7 +22,7 @@ public class DatabaseConnectionsPool {
 
         PoolConfigurationReader poolConfigurationReader = new PoolConfigurationReader();
 
-        this.databaseManager = new DatabaseManager( this );
+        this.databaseAccessor = new DataBaseAccesor( this );
 
         this.blockSize = poolConfigurationReader.getBlockSize();
         this.maxPoolSize = poolConfigurationReader.getMaxPoolSize();
@@ -61,7 +60,7 @@ public class DatabaseConnectionsPool {
     public void releaseConnection( DatabaseConnection connection ) throws Exception {
 
         if ( connection.isDeprecated() ) {
-            connection.setConnection( this.databaseManager.getConnection() );
+            connection.setConnection( this.databaseAccessor.getConnection() );
             connection.setDeprecated( false );
         }
 
@@ -79,14 +78,14 @@ public class DatabaseConnectionsPool {
 
     }
 
-    public void updateConnections() {
+    public void updateConnections() throws Exception {
 
         for ( int i = 0; i < this.maxPoolSize; i++ ) {
 
             if ( this.pool[ i ] != null ) {
                 DatabaseConnection actualIterationConnection = this.pool[i];
                 if ( ! actualIterationConnection.isAcquired() ) {
-                    actualIterationConnection.setConnection( this.databaseManager.getConnection() );
+                    actualIterationConnection.setConnection( this.databaseAccessor.getConnection() );
                 } else {
                     actualIterationConnection.setDeprecated( true );
                 }
@@ -136,7 +135,7 @@ public class DatabaseConnectionsPool {
 
             for ( int i = 0; i < this.blockSize; i++ ) {
                 this.pool[ indexFirstNotInitializedConnection ] =
-                        new DatabaseConnection( indexFirstNotInitializedConnection, this.databaseManager.getConnection() );
+                        new DatabaseConnection( indexFirstNotInitializedConnection, this.databaseAccessor.getConnection() );
                 indexFirstNotInitializedConnection++;
             }
 
@@ -173,7 +172,7 @@ public class DatabaseConnectionsPool {
 
                 for ( int i = 0; i < stopAt; i++ ) {
                     newPool[ firstNotInitializedPoolIndex ] =
-                            new DatabaseConnection( firstNotInitializedPoolIndex, this.databaseManager.getConnection() );
+                            new DatabaseConnection( firstNotInitializedPoolIndex, this.databaseAccessor.getConnection() );
                 }
             }
 
@@ -190,7 +189,7 @@ public class DatabaseConnectionsPool {
 
         this.pool = new DatabaseConnection[ this.maxPoolSize ];
         for ( int i = 0; i < this.blockSize; i++ ) {
-            this.pool[ i ] = new DatabaseConnection( i, this.databaseManager.getConnection() );
+            this.pool[ i ] = new DatabaseConnection( i, this.databaseAccessor.getConnection() );
         }
 
         this.amountBlocks++;

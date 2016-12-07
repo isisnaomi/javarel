@@ -39,11 +39,11 @@ public class DatabaseConnection {
         this.id = id;
     }
 
-    Connection getConnection() {
+    protected Connection getConnection() {
         return connection;
     }
 
-    void setConnection( Connection connection ) {
+    void setConnection(Connection connection) {
         this.connection = connection;
     }
 

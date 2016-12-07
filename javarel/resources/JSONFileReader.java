@@ -1,4 +1,4 @@
-package Resources;
+package javarel.resources;
 
 /* import org.json.simple.JSONArray; */
 
