@@ -1,10 +1,12 @@
 
 package javarel.Pool;
 
+
 import javarel.DB.exceptions.DBQueryException;
 import javarel.DB.utils.DBConnection;
 
 import java.sql.ResultSet;
+
 
 public class DatabaseConnection {
 

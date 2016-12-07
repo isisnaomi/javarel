@@ -4,6 +4,7 @@ package javarel.Pool;
 
 import javarel.DB.DataBaseAccessor;
 
+
 public class DatabaseConnectionsPool {
 
     private DataBaseAccessor databaseAccessor;
@@ -118,7 +119,7 @@ public class DatabaseConnectionsPool {
 
             if ( i == poolSize ) {
 
-                throw new Exception("No connections available.");
+                throw new Exception( "No connections available." );
 
             } else {
 
@@ -158,7 +159,7 @@ public class DatabaseConnectionsPool {
             this.amountBlocks++;
 
         } else {
-            throw new Exception("Pool is already at its maximum size.");
+            throw new Exception( "Pool is already at its maximum size." );
         }
 
     }
@@ -184,7 +185,7 @@ public class DatabaseConnectionsPool {
             }
 
             if ( ( firstNotInitializedPoolIndex % this.blockSize ) != 0 ) {
-                int stopAt = this.blockSize - (firstNotInitializedPoolIndex % this.blockSize);
+                int stopAt = this.blockSize - ( firstNotInitializedPoolIndex % this.blockSize );
 
                 for ( int i = 0; i < stopAt; i++ ) {
                     newPool[ firstNotInitializedPoolIndex ] =
