@@ -2,11 +2,11 @@
 package javarel.Pool;
 
 
-import javarel.DB.DataBaseAccesor;
+import javarel.DB.DataBaseAccessor;
 
 public class DatabaseConnectionsPool {
 
-    private DataBaseAccesor databaseAccessor;
+    private DataBaseAccessor databaseAccessor;
 
 
     private int blockSize;
@@ -20,12 +20,12 @@ public class DatabaseConnectionsPool {
     private DatabaseConnection[] pool;
 
 
-    public DatabaseConnectionsPool() {
+    public DatabaseConnectionsPool() throws Exception {
 
         PoolConfigurationReader poolConfigurationReader = new PoolConfigurationReader();
 
 
-        this.databaseAccessor = new DataBaseAccesor( this );
+        this.databaseAccessor = new DataBaseAccessor( this );
 
 
         this.blockSize = poolConfigurationReader.getBlockSize();
@@ -85,7 +85,7 @@ public class DatabaseConnectionsPool {
     }
 
 
-    public void updateConnections() throws Exception {
+    public void updateConnections() {
 
 
         for ( int i = 0; i < this.maxPoolSize; i++ ) {
@@ -94,7 +94,11 @@ public class DatabaseConnectionsPool {
                 DatabaseConnection actualIterationConnection = this.pool[i];
                 if ( ! actualIterationConnection.isAcquired() ) {
 
-                    actualIterationConnection.setConnection( this.databaseAccessor.getConnection() );
+                    try {
+                        actualIterationConnection.setConnection( this.databaseAccessor.getConnection() );
+                    } catch ( Exception e ) {
+                        e.printStackTrace();
+                    }
 
                 } else {
                     actualIterationConnection.setDeprecated( true );
@@ -199,7 +203,7 @@ public class DatabaseConnectionsPool {
 
     }
 
-    private void initializePool() {
+    private void initializePool() throws Exception {
 
         this.pool = new DatabaseConnection[ this.maxPoolSize ];
         for ( int i = 0; i < this.blockSize; i++ ) {

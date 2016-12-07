@@ -2,13 +2,14 @@
 package javarel.Pool;
 
 import org.json.simple.JSONObject;
+import java.io.File;
 
 import javarel.resources.JSONFileReader;
 
 
 class PoolConfigurationReader {
 
-    private String configurationFilePath = "/Users/codeams/Documents/Code/Java/database-pool/configuration.json";
+    private String configurationFilePath = this.getConfigurationFilePath();
 
     private JSONFileReader jsonFileReader = new JSONFileReader();
 
@@ -40,6 +41,15 @@ class PoolConfigurationReader {
         }
 
         return maxPoolSize;
+
+    }
+
+    private String getConfigurationFilePath() {
+
+        String filePath = new File("").getAbsolutePath();
+        String configurationFilePath = filePath + "../../config/Pool_config.json";
+
+        return configurationFilePath;
 
     }
 

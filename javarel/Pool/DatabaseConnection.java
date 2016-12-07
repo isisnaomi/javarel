@@ -1,20 +1,23 @@
 
 package javarel.Pool;
 
-import java.sql.*;
+import javarel.DB.exceptions.DBQueryException;
+import javarel.DB.utils.DBConnection;
+
+import java.sql.ResultSet;
 
 public class DatabaseConnection {
 
     private int id;
 
-    private Connection connection;
+    private DBConnection connection;
 
     private boolean acquired;
 
     private boolean deprecated;
 
 
-    DatabaseConnection( int id, Connection connection ) {
+    DatabaseConnection( int id, DBConnection connection ) {
         this.id = id;
         this.connection = connection;
     }
@@ -23,10 +26,9 @@ public class DatabaseConnection {
         System.out.println( this.getId() );
     }
 
-    public ResultSet query( String query ) throws SQLException {
+    public ResultSet query( String query ) throws DBQueryException {
 
-        Statement statement = this.connection.createStatement();
-        ResultSet resultSet = statement.executeQuery( query );
+        ResultSet resultSet = this.connection.query( query );
 
         return resultSet;
     }
@@ -40,11 +42,11 @@ public class DatabaseConnection {
     }
 
 
-    protected Connection getConnection() {
+    protected DBConnection getConnection() {
         return connection;
     }
 
-    void setConnection(Connection connection) {
+    void setConnection(DBConnection connection) {
 
         this.connection = connection;
     }
