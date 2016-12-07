@@ -5,8 +5,8 @@
  */
 package javarel.DB;
 
-import javarel.DB.test.DataBaseConnectionsPool;
 
+import javarel.Pool.DatabaseConnectionsPool;
 import javarel.DB.exceptions.DBInvalidSettingsException;
 import javarel.DB.exceptions.DBFileException;
 import javarel.DB.exceptions.DBQueryException;
@@ -28,7 +28,7 @@ import org.json.simple.parser.ParseException;
  *
  * @author David Hernández
  */
-public class DataBaseAccesor {
+public class DataBaseAccessor {
 
     private String DB_CONNECTION;
     private String DB_HOST;
@@ -37,11 +37,11 @@ public class DataBaseAccesor {
     private String DB_USERNAME;
     private String DB_PASSWORD;
 
-    private final DataBaseConnectionsPool connectionPool;
+    private final DatabaseConnectionsPool connectionPool;
     
     FileChangeListener changeListener;
 
-    public DataBaseAccesor( DataBaseConnectionsPool connectionPool ) {
+    public DataBaseAccessor( DatabaseConnectionsPool connectionPool ) {
         
         this.connectionPool = connectionPool;
         changeListener = new FileChangeListener(this);
@@ -65,7 +65,7 @@ public class DataBaseAccesor {
 
                 String link = "jdbc:" + DB_CONNECTION + "://"
                         + DB_HOST
-                        + ":" + DB_PORT + "/";
+                        + ":" + DB_PORT + "/" + DB_DATABASE;
 
                 connection = DriverManager.getConnection(link, connectionProps);
 

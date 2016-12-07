@@ -9,12 +9,11 @@ package javarel.DB.exceptions;
  *
  * @author Tony
  */
-public class DBFileException extends Exception{
-     
-  public DBFileException( Throwable cause ) {
-      
-       super( "DataBaseAccesor Files: " + cause.getMessage(), cause ); 
-       
-  }
+public class DBConectionException extends Exception{
     
+    public DBConectionException( Throwable cause ) {
+       
+       super( "DataBaseAccesor Connections: "+cause.getMessage(), cause ); 
+       
+   }
 }

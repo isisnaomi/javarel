@@ -5,7 +5,7 @@
  */
 package javarel.DB.utils;
 
-import javarel.DB.DataBaseAccesor;
+import javarel.DB.DataBaseAccessor;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -17,9 +17,9 @@ import java.io.IOException;
  * @author Tony
  */
 public class FileChangeListener extends Thread{
-   private DataBaseAccesor DB;
+   private DataBaseAccessor DB;
 
-    public FileChangeListener(DataBaseAccesor db) {
+    public FileChangeListener(DataBaseAccessor db) {
         this.DB = db;
     }
     
