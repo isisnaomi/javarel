@@ -1,4 +1,4 @@
-import org.w3c.dom.*;
+package javarel.javarel.ORM;
 import javax.xml.parsers.*;
 import java.io.*;
 import java.lang.reflect.Field;
@@ -7,18 +7,9 @@ import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import org.xml.sax.SAXException;
-import.javarel.pool.DatabaseConnectionsPool.java;
+import javarel.javarel.Pool.*;
+import javarel.javarel.ORM.Exceptions.*;
+import javarel.javarel.resources.*;
 
 
 /*
@@ -39,6 +30,7 @@ public class Model {
     private ResultSet myRs = null;
     String className = this.getClass().getSimpleName().toLowerCase();
     //private DataBaseConn dbc = new DataBaseConn();//
+    private DatabaseConnectionsPool dbcp;
     private boolean isXML = false;
     private XMLFileManager xmlManager = new XMLFileManager( className, "root", "class", "table" ); 
 
@@ -58,13 +50,13 @@ public class Model {
         try {
             
             //dbc.connect();
-            DatabaseConnections connection = dbcp.adquiereConnection();
+            DatabaseConnection connection = dbcp.adquiereConnection();
             //myRs = dbc.excecuteQuery(query);
             myRs = connection.query(query);
             dbcp.releaseConnection();
             
             
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             
             throw new ErroneousRelationshipException();
         }
