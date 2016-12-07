@@ -1,4 +1,4 @@
-package javarel.javarel.ORM;
+package javarel.ORM;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -7,9 +7,9 @@ import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javarel.javarel.Pool.*;
-import javarel.javarel.ORM.Exceptions.*;
-import javarel.javarel.resources.*;
+import javarel.Pool.*;
+import javarel.ORM.Exceptions.*;
+import javarel.resources.*;
 
 
 /*
@@ -34,11 +34,12 @@ public class Model {
     private boolean isXML = false;
     private XMLFileManager xmlManager = new XMLFileManager( className, "root", "class", "table" ); 
 
-    public Model()  {
+    public Model() throws Exception  {
         
         DatabaseConnectionsPool dbcp = new DatabaseConnectionsPool();
         
     }
+    
     public void initialize() throws NonExistentMappingException {
         
         createModelInfo();
@@ -58,10 +59,10 @@ public class Model {
         try {
             
             //dbc.connect();
-            DatabaseConnection connection = dbcp.adquiereConnection();
+            DatabaseConnection connection = dbcp.acquireConnection();
             //myRs = dbc.excecuteQuery(query);
             myRs = connection.query(query);
-            dbcp.releaseConnection();
+            dbcp.releaseConnection( connection );
             
             
         } catch (Exception ex) {
