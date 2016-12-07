@@ -20,7 +20,7 @@ public class DBInvalidSettingsException extends Exception{
   }
   
   public DBInvalidSettingsException(Throwable cause) {
-       super("DataBaseAccesor: "+cause.getMessage()); 
+       super("DataBaseAccesor Settings: "+cause.getMessage(), cause); 
    }
     
     

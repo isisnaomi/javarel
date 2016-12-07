@@ -34,13 +34,10 @@ public class DataBaseConnectionsPool {
             
             con = d.getConnection();
             
-        } catch (DBQueryException ex) {
+        } catch (DBQueryException | DBInvalidSettingsException | DBFileException ex) {
             
             System.out.println(ex);
             
-        } catch (DBInvalidSettingsException ex) {
-            
-        } catch (DBFileException ex) {
         }
         
           System.out.println(con);

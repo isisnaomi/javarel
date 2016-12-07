@@ -13,7 +13,7 @@ public class DBQueryException extends Exception{
          
    public DBQueryException( Throwable cause ) {
        
-       super( "DataBaseAccesor: "+cause.getMessage() ); 
+       super( "DataBaseAccesor Connections: "+cause.getMessage(), cause ); 
        
    }
   

@@ -3,18 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javarel.DB.exceptions;
+package javarel.DB.utils;
+
+import com.mysql.jdbc.Connection;
 
 /**
  *
  * @author Tony
  */
-public class DBFileException extends Exception{
-     
-  public DBFileException( Throwable cause ) {
-      
-       super( "DataBaseAccesor Files: " + cause.getMessage() ); 
-       
-  }
+public class DBConnection{
+    
+    private final Connection conn;
+
+    public DBConnection(Connection connection) {
+        this.conn = connection;
+    }
     
 }

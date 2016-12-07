@@ -16,7 +16,7 @@ import java.io.IOException;
  *
  * @author Tony
  */
-class FileChangeListener extends Thread{
+public class FileChangeListener extends Thread{
    private DataBaseAccesor DB;
 
     public FileChangeListener(DataBaseAccesor db) {

@@ -10,6 +10,7 @@ import javarel.DB.test.DataBaseConnectionsPool;
 import javarel.DB.exceptions.DBInvalidSettingsException;
 import javarel.DB.exceptions.DBFileException;
 import javarel.DB.exceptions.DBQueryException;
+import javarel.DB.utils.FileChangeListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -18,6 +19,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import javarel.DB.utils.DBConnection;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -35,20 +37,20 @@ public class DataBaseAccesor {
     private String DB_USERNAME;
     private String DB_PASSWORD;
 
-    private DataBaseConnectionsPool connectionPool;
+    private final DataBaseConnectionsPool connectionPool;
+    
     FileChangeListener changeListener;
-    private boolean hasValidSettings = true;
 
     public DataBaseAccesor( DataBaseConnectionsPool connectionPool ) {
         
         this.connectionPool = connectionPool;
         changeListener = new FileChangeListener(this);
         changeListener.start();
-        
 
     }
 
-    public Connection getConnection() throws DBQueryException, DBInvalidSettingsException, DBFileException {
+    public DBConnection getConnection() throws DBQueryException,
+            DBInvalidSettingsException, DBFileException {
         
         this.readConfigFile();
 
@@ -82,7 +84,8 @@ public class DataBaseAccesor {
             throw new DBQueryException(ex);
             
         }
-        return connection;
+        
+        return new DBConnection((com.mysql.jdbc.Connection) connection);
 
     }
 
