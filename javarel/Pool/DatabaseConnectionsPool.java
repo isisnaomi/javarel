@@ -2,13 +2,20 @@
 package javarel.Pool;
 
 
+import javarel.Pool.Exceptions.PoolBadConfigurationException;
 import javarel.DB.DataBaseAccessor;
+import javarel.DB.utils.DBConnection;
+
+import java.io.IOException;
+
+import javarel.Pool.Exceptions.PoolBadConnectionException;
+import javarel.Pool.Exceptions.PoolNoConnectionsAvailableException;
+import org.json.simple.parser.ParseException;
 
 
 public class DatabaseConnectionsPool {
 
     private DataBaseAccessor databaseAccessor;
-
 
     private int blockSize;
 
@@ -21,31 +28,38 @@ public class DatabaseConnectionsPool {
     private DatabaseConnection[] pool;
 
 
-    public DatabaseConnectionsPool() throws Exception {
+    public DatabaseConnectionsPool() throws PoolBadConfigurationException, PoolBadConnectionException {
 
-        PoolConfigurationReader poolConfigurationReader = new PoolConfigurationReader();
+        try {
 
-        this.databaseAccessor = new DataBaseAccessor( this );
-        
-        this.blockSize = poolConfigurationReader.getBlockSize();
-        this.maxPoolSize = poolConfigurationReader.getMaxPoolSize();
+            PoolConfigurationReader poolConfigurationReader = new PoolConfigurationReader();
 
-        this.amountBlocks = 0;
-        this.amountAcquiredConnections = 0;
+
+            this.databaseAccessor = new DataBaseAccessor( this );
+
+            this.blockSize = poolConfigurationReader.getBlockSize();
+            this.maxPoolSize = poolConfigurationReader.getMaxPoolSize();
+
+            this.amountBlocks = 0;
+            this.amountAcquiredConnections = 0;
+
+        } catch ( IOException | ParseException exception ) {
+
+            throw new PoolBadConfigurationException( "Cannot read configuration file.", exception );
+
+        }
 
         this.initializePool();
-        
 
     }
 
-    public DatabaseConnection acquireConnection() throws Exception {
+    public DatabaseConnection acquireConnection() throws PoolNoConnectionsAvailableException, PoolBadConnectionException {
        
         DatabaseConnection databaseConnection = this.searchForNotAcquiredConnection();
-        System.out.println(databaseConnection);
         databaseConnection.setAcquired( true );
         this.amountAcquiredConnections++;
 
-        /* Check if increasePoolSizeIsNecessary */
+        /* Lets check if poolSize increase is required: */
         int totalConnections = this.blockSize * this.amountBlocks;
         int maxBlocksAmount = this.maxPoolSize / this.blockSize;
 
@@ -55,7 +69,7 @@ public class DatabaseConnectionsPool {
         if ( isPoolSizeIncreaseNecessary && canIncreasePoolSize  ) {
             this.increasePoolSize();
         }
-        /* End */
+        /* --- */
         
         return databaseConnection;
 
@@ -66,50 +80,60 @@ public class DatabaseConnectionsPool {
         if ( connection.isDeprecated() ) {
 
             connection.setConnection( this.databaseAccessor.getConnection() );
-
             connection.setDeprecated( false );
+
         }
 
         connection.setAcquired( false );
         this.amountAcquiredConnections--;
 
-        /* checkIfShouldReducePoolSize */
+        /* Lets check if poolSize reduction is possible: */
         int totalConnections = this.blockSize * this.amountBlocks;
         boolean shouldReducePoolSize = ( totalConnections - this.amountAcquiredConnections ) > this.blockSize;
 
         if ( shouldReducePoolSize ) {
             this.decreasePoolSize();
         }
-        /* End */
+        /* --- */
 
     }
 
 
     public void updateConnections() {
 
-        System.out.println("Se updatearon las conecshions");
         for ( int i = 0; i < this.maxPoolSize; i++ ) {
 
             if ( this.pool[ i ] != null ) {
+
                 DatabaseConnection actualIterationConnection = this.pool[i];
+
                 if ( ! actualIterationConnection.isAcquired() ) {
 
                     try {
-                        actualIterationConnection.setConnection( this.databaseAccessor.getConnection() );
-                    } catch ( Exception e ) {
-                        System.out.println(e.getMessage());
+
+                        DBConnection connection = this.databaseAccessor.getConnection();
+                        actualIterationConnection.setConnection( connection );
+
+                    } catch ( Exception exception ) {
+
+                        new PoolBadConnectionException( "Bad connection provided from DatabaseAccessor.", exception )
+                                .printStackTrace();
+
                     }
 
                 } else {
+
                     actualIterationConnection.setDeprecated( true );
+
                 }
+
             }
 
         }
 
     }
 
-    private DatabaseConnection searchForNotAcquiredConnection() throws Exception {
+    private DatabaseConnection searchForNotAcquiredConnection() throws PoolNoConnectionsAvailableException {
         
         int i = 0;
         int poolSize = this.pool.length;
@@ -118,7 +142,7 @@ public class DatabaseConnectionsPool {
 
             if ( i == poolSize ) {
                 
-                throw new Exception( "No connections available." );
+                throw new PoolNoConnectionsAvailableException( "No pool database connections available." );
 
             } else {
 
@@ -129,6 +153,7 @@ public class DatabaseConnectionsPool {
                    
                     i++;
                     continue;
+
                 } else {
                    
                     return actualIterationConnection;
@@ -140,7 +165,7 @@ public class DatabaseConnectionsPool {
 
     }
 
-    private void increasePoolSize() throws Exception {
+    private void increasePoolSize() throws PoolBadConnectionException {
 
         int maxBlocksAmount = this.maxPoolSize / this.blockSize;
         boolean canIncreasePoolSize = this.amountBlocks < maxBlocksAmount;
@@ -150,17 +175,28 @@ public class DatabaseConnectionsPool {
             int indexFirstNotInitializedConnection = ( this.blockSize * this.amountBlocks );
 
             for ( int i = 0; i < this.blockSize; i++ ) {
-                this.pool[ indexFirstNotInitializedConnection ] =
 
-                        new DatabaseConnection( indexFirstNotInitializedConnection, this.databaseAccessor.getConnection() );
+                try {
 
-                indexFirstNotInitializedConnection++;
+                    this.pool[indexFirstNotInitializedConnection] =
+                            new DatabaseConnection(indexFirstNotInitializedConnection, this.databaseAccessor.getConnection());
+
+                    indexFirstNotInitializedConnection++;
+
+                } catch ( Exception exception ) {
+
+                    throw new PoolBadConnectionException( "Bad connection provided from DatabaseAccessor.", exception);
+
+                }
+
             }
 
             this.amountBlocks++;
 
         } else {
-            throw new Exception( "Pool is already at its maximum size." );
+
+            new Exception( "Can't increase pool maximum size" ).printStackTrace();
+
         }
 
     }
@@ -200,17 +236,28 @@ public class DatabaseConnectionsPool {
             this.amountBlocks--;
 
         } else {
-            throw new Exception( "Cannot reduce poolSize" );
+
+            new Exception( "Cannot reduce poolSize" ).printStackTrace();
+
         }
 
     }
 
-    private void initializePool() throws Exception {
+    private void initializePool() throws PoolBadConnectionException {
 
         this.pool = new DatabaseConnection[ this.maxPoolSize ];
         for ( int i = 0; i < this.blockSize; i++ ) {
-            
-            this.pool[ i ] = new DatabaseConnection( i, this.databaseAccessor.getConnection() );
+
+            try {
+
+                DBConnection connection = this.databaseAccessor.getConnection();
+                this.pool[ i ] = new DatabaseConnection( i, connection );
+
+            } catch ( Exception exception ) {
+
+                throw new PoolBadConnectionException( "Bad connection provided from DatabaseAccessor.", exception );
+
+            }
            
         }
 

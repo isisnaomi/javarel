@@ -4,8 +4,10 @@ package javarel.Pool;
 
 import org.json.simple.JSONObject;
 import java.io.File;
+import java.io.IOException;
 
 import javarel.resources.JSONFileReader;
+import org.json.simple.parser.ParseException;
 
 
 class PoolConfigurationReader {
@@ -17,7 +19,7 @@ class PoolConfigurationReader {
     private JSONObject configurationObject;
 
 
-    PoolConfigurationReader() {
+    PoolConfigurationReader() throws IOException, ParseException {
 
         this.configurationObject = this.jsonFileReader.getJSONObject( this.configurationFilePath );
 

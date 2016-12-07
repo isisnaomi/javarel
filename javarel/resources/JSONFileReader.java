@@ -16,24 +16,15 @@ public class JSONFileReader {
 
     }
 
-    public JSONObject getJSONObject( String JSONFileUrl ) {
+    public JSONObject getJSONObject( String JSONFileUrl ) throws IOException, ParseException {
 
         JSONParser JSONParser = new JSONParser();
 
-        try {
+        FileReader fileReader = new FileReader( JSONFileUrl );
+        Object object = JSONParser.parse( fileReader );
+        JSONObject jsonObject = ( JSONObject ) object;
 
-            FileReader fileReader = new FileReader( JSONFileUrl );
-            Object object = JSONParser.parse( fileReader );
-            JSONObject jsonObject = ( JSONObject ) object;
-
-            return jsonObject;
-
-        } catch ( IOException | ParseException exception ) {
-
-            exception.printStackTrace();
-            return new JSONObject();
-
-        }
+        return jsonObject;
 
     }
 
