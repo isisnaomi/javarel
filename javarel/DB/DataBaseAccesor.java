@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DB;
+package javarel.DB;
 
-import DB.test.DataBaseConnectionsPool;
-import exceptions.DBInvalidSettingsException;
-import exceptions.DBFileException;
-import exceptions.DBQueryException;
+import javarel.DB.test.DataBaseConnectionsPool;
+
+import javarel.DB.exceptions.DBInvalidSettingsException;
+import javarel.DB.exceptions.DBFileException;
+import javarel.DB.exceptions.DBQueryException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;

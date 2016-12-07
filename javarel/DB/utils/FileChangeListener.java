@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DB;
+package javarel.DB.utils;
 
+import javarel.DB.DataBaseAccesor;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
