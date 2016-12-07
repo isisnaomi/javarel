@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 package Resources;
+=======
+package javarel.resources;
+>>>>>>> 553ad725d1dc7c017dfed4aaebb1ec4b3de9764b
 
 /* import org.json.simple.JSONArray; */
 

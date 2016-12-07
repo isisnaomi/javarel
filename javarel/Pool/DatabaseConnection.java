@@ -39,11 +39,19 @@ public class DatabaseConnection {
         this.id = id;
     }
 
+<<<<<<< HEAD
     Connection getConnection() {
         return connection;
     }
 
     void setConnection( Connection connection ) {
+=======
+    protected Connection getConnection() {
+        return connection;
+    }
+
+    void setConnection(Connection connection) {
+>>>>>>> 553ad725d1dc7c017dfed4aaebb1ec4b3de9764b
         this.connection = connection;
     }
 
