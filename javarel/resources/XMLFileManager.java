@@ -26,6 +26,7 @@ import org.xml.sax.SAXException;
  * @author IsisNaomi
  */
 public class XMLFileManager {
+    String filePath = new File("").getAbsolutePath();
     String fileName;
     private boolean isXML = false;
     String tableName;
@@ -34,19 +35,25 @@ public class XMLFileManager {
     String tableNameTag;
 
     public String getTableName() {
+        
         return tableName;
+        
     }
 
     public XMLFileManager(String fileName) {
+        
         this.fileName = fileName;
+        
     }
      public XMLFileManager(String fileName,String rootTag, String classNameTag, String tableNameTag ) {
+         
         this.fileName = fileName;
+        
     }
     
 
     public void readXML() throws SAXException, IOException, ParserConfigurationException{
-	File fXmlFile = new File(fileName + "_config.xml");
+	File fXmlFile = new File(filePath +"\\config\\" + fileName + "_config.xml");
 	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 	Document doc = dBuilder.parse(fXmlFile);
@@ -78,9 +85,11 @@ public class XMLFileManager {
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
-        StreamResult result = new StreamResult(this.fileName +"_config.xml");
+        StreamResult result = new StreamResult(filePath+"\\config\\" + this.fileName +"_config.xml");
         transformer.transform(source, result);
+        
         isXML = true;
+        
         }
         
     }
