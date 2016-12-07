@@ -3,13 +3,13 @@ package javarel.Pool;
 
 
 import javarel.Pool.Exceptions.PoolBadConfigurationException;
+import javarel.Pool.Exceptions.PoolBadConnectionException;
+import javarel.Pool.Exceptions.PoolNoConnectionsAvailableException;
 import javarel.DB.DataBaseAccessor;
 import javarel.DB.utils.DBConnection;
 
 import java.io.IOException;
 
-import javarel.Pool.Exceptions.PoolBadConnectionException;
-import javarel.Pool.Exceptions.PoolNoConnectionsAvailableException;
 import org.json.simple.parser.ParseException;
 
 
