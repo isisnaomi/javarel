@@ -7,6 +7,8 @@ import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javarel.Pool.*;
 import javarel.ORM.Exceptions.*;
 import javarel.resources.*;
@@ -34,14 +36,18 @@ public class Model {
     private boolean isXML = false;
     private XMLFileManager xmlManager = new XMLFileManager( className, "root", "class", "table" ); 
 
-    public Model() throws Exception  {
+    public Model() {
         
-        DatabaseConnectionsPool dbcp = new DatabaseConnectionsPool();
+        try {
+            DatabaseConnectionsPool dbcp = new DatabaseConnectionsPool();
+        } catch (Exception ex) {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     
     public void initialize() throws NonExistentMappingException {
-        
+        System.out.println("hola");
         createModelInfo();
         checkForXML( );
         tableName = xmlManager.getTableName();
@@ -125,11 +131,13 @@ public class Model {
     
     
     private void checkForXML( ) throws NonExistentMappingException {
+        
         String filePath = new File("").getAbsolutePath();
+        filePath = filePath.concat("\\src\\config\\"+ className + "_config.xml");
+        System.out.println(filePath);
+        
         try{
-            
-            filePath = filePath.concat("\\config\\"+ className + "_config.xml");
-            
+               
             File f = new File(filePath);
             
             if(f.exists() && !f.isDirectory()) { 
@@ -138,11 +146,11 @@ public class Model {
 
             }
             else {
-
+                   System.out.println("lo voa a crear");
                     xmlManager.createXML();
             }
         } catch (Exception ex) {
-            
+                System.out.println(ex.getMessage());
                 throw new NonExistentMappingException();
                 
         }

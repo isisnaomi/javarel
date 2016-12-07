@@ -1,3 +1,5 @@
+package javarel.resources;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -53,7 +55,7 @@ public class XMLFileManager {
     
 
     public void readXML() throws SAXException, IOException, ParserConfigurationException{
-	File fXmlFile = new File(filePath +"\\config\\" + fileName + "_config.xml");
+	File fXmlFile = new File(filePath +"\\src\\config\\" + fileName + "_config.xml");
 	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 	Document doc = dBuilder.parse(fXmlFile);
@@ -85,7 +87,8 @@ public class XMLFileManager {
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
-        StreamResult result = new StreamResult(filePath+"\\config\\" + this.fileName +"_config.xml");
+            System.out.println(filePath+"\\src\\config\\" + this.fileName +"_config.xml");
+        StreamResult result = new StreamResult(filePath+"\\src\\config\\" + this.fileName +"_config.xml");
         transformer.transform(source, result);
         
         isXML = true;

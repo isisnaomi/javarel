@@ -48,7 +48,7 @@ class PoolConfigurationReader {
     private String getConfigurationFilePath() {
 
         String filePath = new File("").getAbsolutePath();
-        String configurationFilePath = filePath + "../../config/Pool_config.json";
+        String configurationFilePath = filePath + "/src/config/Pool_config.json";
 
         return configurationFilePath;
 
