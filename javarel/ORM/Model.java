@@ -31,11 +31,12 @@ public class Model {
     private ArrayList<Object> instances = new ArrayList<Object>();
     private ResultSet myRs = null;
     String className = this.getClass().getSimpleName().toLowerCase();
-    private String tableName = className.concat("s");
+    String tableName;
+
     //private DataBaseConn dbc = new DataBaseConn();//
     private DatabaseConnectionsPool dbcp;
     private boolean isXML = false;
-    private XMLFileManager xmlManager = new XMLFileManager( className, tableName ); 
+    private XMLFileManager xmlManager;
 
   
     
@@ -89,7 +90,7 @@ public class Model {
                     throw new ErroneousObjectException();
                 }
                 for(int i=0; i<fieldsName.size(); i++){
-                      
+                    
                     
                     String fieldName = fieldsName.get(i).substring(0, 1).toUpperCase() + fieldsName.get(i).substring(1);
                     methodName = "set" + fieldName;
@@ -120,15 +121,16 @@ public class Model {
                 
             }
         } catch (SQLException ex) {
-            
-            throw new ErroneousMappingException();
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         
        return instances; 
     }
     
     
     private void checkForXML( ) throws NonExistentMappingException {
+         xmlManager= new XMLFileManager( className, tableName ); 
         
         String filePath = new File("").getAbsolutePath();
         //filePath = filePath.concat("\\src\\config\\"+ className + "_config.xml");
@@ -158,6 +160,7 @@ public class Model {
     private void createModelInfo(){ 
         
         Field[] fields = this.getClass().getDeclaredFields();
+        tableName = className.concat("s");
         String fieldName;
         Class fieldClass;
         for (Field field : fields) {
