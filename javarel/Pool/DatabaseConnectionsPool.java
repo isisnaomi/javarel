@@ -157,6 +157,7 @@ public class DatabaseConnectionsPool {
                 } else {
                    
                     return actualIterationConnection;
+
                 }
 
             }
@@ -214,22 +215,26 @@ public class DatabaseConnectionsPool {
 
             for ( int i = 0; i < this.maxPoolSize; i++ ) {
                 if ( this.pool[ i ] != null ) {
+
                     DatabaseConnection actualIterationConnection = this.pool[ i ];
                     actualIterationConnection.setId( firstNotInitializedPoolIndex );
                     newPool[ firstNotInitializedPoolIndex ] = actualIterationConnection;
                     firstNotInitializedPoolIndex++;
+
                 }
             }
 
             if ( ( firstNotInitializedPoolIndex % this.blockSize ) != 0 ) {
+
                 int stopAt = this.blockSize - ( firstNotInitializedPoolIndex % this.blockSize );
 
                 for ( int i = 0; i < stopAt; i++ ) {
-                    newPool[ firstNotInitializedPoolIndex ] =
 
+                    newPool[ firstNotInitializedPoolIndex ] =
                             new DatabaseConnection( firstNotInitializedPoolIndex, this.databaseAccessor.getConnection() );
 
                 }
+
             }
 
             this.pool = newPool;
