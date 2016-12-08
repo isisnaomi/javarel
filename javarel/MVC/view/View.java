@@ -38,7 +38,7 @@ public class View {
         }
     }
     
-    public Object reflect(String controller){  
+    private Object reflect(String controller){  
         Object obj = null;
 	try{
 	        //load the AppTest at runtime

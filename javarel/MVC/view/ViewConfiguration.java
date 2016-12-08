@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -31,6 +32,10 @@ public class ViewConfiguration {
         configFilePath = generateConfigFilePath();
     }
     
+    public String getConfigFilePath(){
+        return configFilePath;
+    }
+    
     public Service obtainService(String serviceName) throws Exception{
         Service service = null;
         
@@ -59,10 +64,6 @@ public class ViewConfiguration {
         String configPath = absolutePath + "/config/mvc_config.xml";
         
         return configPath;
-    }
-    
-    public String getConfigFilePath(){
-        return configFilePath;
     }
     
     private Document obtainConfigFile() throws ParserConfigurationException, SAXException, IOException{
